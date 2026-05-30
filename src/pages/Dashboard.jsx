@@ -5,7 +5,7 @@ import {
   PieChart, Pie, Cell, CartesianGrid,
 } from "recharts";
 import { api } from "../services/api";
-import { Spinner, ErrorBox } from "../components/Spinner";
+import { DashboardSkeleton, ErrorBox } from "../components/Spinner";
 import { CHART_COLORS, qualityPill } from "../utils/format";
 import { IconDashboard, IconBag, IconWarning, IconInfo, IconInspect } from "../components/icons";
 
@@ -48,7 +48,7 @@ export default function Dashboard() {
     [products]
   );
 
-  if (loading) return <Spinner />;
+  if (loading) return <DashboardSkeleton />;
   if (error) return <ErrorBox message={error} />;
 
   const bySev = summary.issuesBySeverity || {};
@@ -237,7 +237,6 @@ function SeverityRow({ color, label, value }) {
   );
 }
 
-// Product thumbnail with graceful fallback to a coloured initial tile.
 function Thumb({ src, name }) {
   const [failed, setFailed] = useState(false);
   if (!src || failed) {

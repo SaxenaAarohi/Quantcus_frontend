@@ -26,6 +26,18 @@ export default function Dashboard() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [downloading, setDownloading] = useState(false);
+
+  async function downloadReport() {
+    setDownloading(true);
+    try {
+      await api.downloadReport();
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setDownloading(false);
+    }
+  }
 
   useEffect(() => {
     Promise.all([api.getSummary(), api.listProducts()])
@@ -60,9 +72,19 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
 
-      <div className="flex items-center gap-2.5">
-        <IconDashboard width={22} height={22} className="text-indigo-600" />
-        <h1 className="text-xl font-semibold tracking-tight text-slate-800">Product Quality Analytics</h1>
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <div className="flex items-center gap-2.5">
+          <IconDashboard width={22} height={22} className="text-indigo-600" />
+          <h1 className="text-xl font-semibold tracking-tight text-slate-800">Product Quality Analytics</h1>
+        </div>
+        <button
+          onClick={downloadReport}
+          disabled={downloading || summary.totalProducts === 0}
+          className="btn-secondary whitespace-nowrap"
+        >
+          <DownloadIcon />
+          {downloading ? "Preparing..." : "Download Report"}
+        </button>
       </div>
 
       {summary.totalProducts === 0 && (
@@ -234,6 +256,16 @@ function SeverityRow({ color, label, value }) {
       <span className="text-slate-600">{label}</span>
       <span className="ml-auto font-semibold text-slate-700">{value}</span>
     </div>
+  );
+}
+
+function DownloadIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" y1="15" x2="12" y2="3" />
+    </svg>
   );
 }
 

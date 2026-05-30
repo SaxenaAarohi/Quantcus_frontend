@@ -19,6 +19,20 @@ async function upload(path, formData) {
   return data;
 }
 
+async function download(path, filename) {
+  const res = await fetch(`${BASE_URL}${path}`);
+  if (!res.ok) throw new Error(`Download failed (${res.status})`);
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 export const api = {
 
   uploadVideo: (formData) => upload("/upload-video", formData),
@@ -36,6 +50,7 @@ export const api = {
   getCompetitorPrices: (skuId) => request(`/products/${skuId}/competitor-prices`),
 
   getSummary: () => request("/dashboard/summary"),
+  downloadReport: () => download("/dashboard/report", "product-quality-report.csv"),
 
   refreshPrices: (skuId) => request(`/competitor-prices/refresh${skuId ? `?skuId=${skuId}` : ""}`, { method: "POST" }),
 

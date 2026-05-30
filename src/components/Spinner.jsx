@@ -18,3 +18,32 @@ export function ErrorBox({ message }) {
 export function EmptyState({ message }) {
   return <div className="text-center text-neutral-400 py-12 text-sm">{message}</div>;
 }
+
+export function TableSkeleton({ rows = 6 }) {
+  return (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <div className="shimmer h-7 w-64" />
+        <div className="shimmer h-4 w-96" />
+      </div>
+      <div className="card p-4 flex gap-3">
+        <div className="shimmer h-9 flex-1" />
+        <div className="shimmer h-9 w-44" />
+        <div className="shimmer h-9 w-44" />
+      </div>
+      <div className="card p-4 space-y-4">
+        {Array.from({ length: rows }).map((_, i) => (
+          <div key={i} className="flex items-center gap-3">
+            <div className="shimmer h-11 w-11" />
+            <div className="flex-1 space-y-2">
+              <div className="shimmer h-4 w-1/3" />
+              <div className="shimmer h-3 w-1/4" />
+            </div>
+            <div className="shimmer h-6 w-16" />
+            <div className="shimmer h-6 w-20" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

@@ -97,7 +97,6 @@ export default function Upload() {
             <IconSparkle width={18} height={18} className="text-indigo-500 shrink-0" />
             <div className="flex-1">
               <p className="text-sm font-medium text-slate-700">Automate SEO Title Enhancement</p>
-              <p className="text-xs text-slate-400">Instruct Gemini to optimize the generated listing title for search.</p>
             </div>
             <Toggle on={enhance} onClick={() => setEnhance(!enhance)} />
           </div>

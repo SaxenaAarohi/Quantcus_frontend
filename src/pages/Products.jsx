@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../services/api";
-import { Spinner, ErrorBox, EmptyState } from "../components/Spinner";
+import { TableSkeleton, ErrorBox, EmptyState } from "../components/Spinner";
 import { formatPrice, qualityPill } from "../utils/format";
 import { IconBag, IconSearch, IconChevronRight } from "../components/icons";
 
@@ -39,7 +39,7 @@ export default function Products() {
     return true;
   });
 
-  if (loading) return <Spinner />;
+  if (loading) return <TableSkeleton />;
   if (error) return <ErrorBox message={error} />;
 
   return (
@@ -48,7 +48,7 @@ export default function Products() {
       <div>
         <div className="flex items-center gap-2.5">
           <IconBag width={24} height={24} className="text-indigo-600" />
-          <h1 className="text-2xl font-bold tracking-tight text-slate-800">E-commerce SKU Inventory</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-800">Ecomm Inventory</h1>
         </div>
         <p className="text-sm text-slate-500 mt-1.5">
           Displaying active product listings on Flipkart. Filter by category, listing alerts, and quality issues.
@@ -186,7 +186,6 @@ function PricePoint({ price, mrp }) {
   );
 }
 
-// Product thumbnail with graceful fallback to a labelled tile.
 function Thumb({ src, name }) {
   const [failed, setFailed] = useState(false);
   if (!src || failed) {

@@ -125,9 +125,9 @@ export default function Upload() {
 
           <div className="flex items-start gap-2.5 rounded-lg bg-amber-50 border border-amber-100 px-4 py-3 text-sm text-amber-800">
             <IconQuestion width={18} height={18} className="text-amber-500 shrink-0 mt-0.5" />
-            <p>
-              Use the <span className="font-semibold">products_sample.csv</span> compiled in the project's root folder configuration to preview immediate testing capabilities!
-            </p>
+           <p>
+  Upload a CSV file to import your product catalog.
+</p>
           </div>
 
           <button disabled={busy === "productCsv"} className="btn w-full py-2.5 bg-orange-600 text-white hover:bg-orange-500">

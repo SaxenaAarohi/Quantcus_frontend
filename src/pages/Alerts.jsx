@@ -101,33 +101,35 @@ function AlertCard({ alert: a, onDismiss }) {
     <div className="card p-4 flex items-start gap-3">
       <tone.Icon width={22} height={22} className={`${tone.color} shrink-0 mt-0.5`} />
 
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 flex-wrap">
-          <h3 className="font-semibold text-slate-800">{alertTitle(a)}</h3>
-          {sku && (
-            <span className="badge bg-white border border-slate-200 text-slate-500 font-mono text-[10px]">SKU ID: {sku}</span>
+      <div className="flex-1 min-w-0 flex flex-col lg:flex-row lg:items-start gap-3">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="font-semibold text-slate-800">{alertTitle(a)}</h3>
+            {sku && (
+              <span className="badge bg-white border border-slate-200 text-slate-500 font-mono text-[10px]">SKU ID: {sku}</span>
+            )}
+          </div>
+          <p className="text-sm text-slate-600 mt-1">{a.message}</p>
+          <p className="text-xs text-slate-400 mt-1.5">Raised {formatDate(a.createdAt)}</p>
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0 flex-wrap">
+          <button onClick={onDismiss} className="btn-secondary whitespace-nowrap">
+            {isLow ? "Mark Active" : "Snooze / Acknowledge"}
+          </button>
+          {sku ? (
+            <Link
+              to={`/products/${sku}`}
+              className={`btn text-white px-3 py-1.5 whitespace-nowrap ${isLow ? "bg-indigo-400 hover:bg-indigo-300" : "bg-indigo-600 hover:bg-indigo-500"}`}
+            >
+              <IconInspect width={14} height={14} /> Fix Issue
+            </Link>
+          ) : (
+            <button disabled className="btn bg-indigo-300 text-white px-3 py-1.5 whitespace-nowrap opacity-60">
+              <IconInspect width={14} height={14} /> Fix Issue
+            </button>
           )}
         </div>
-        <p className="text-sm text-slate-600 mt-1">{a.message}</p>
-        <p className="text-xs text-slate-400 mt-1.5">Raised {formatDate(a.createdAt)}</p>
-      </div>
-
-      <div className="flex items-center gap-2 shrink-0">
-        <button onClick={onDismiss} className="btn-secondary whitespace-nowrap">
-          {isLow ? "Mark Active" : "Snooze / Acknowledge"}
-        </button>
-        {sku ? (
-          <Link
-            to={`/products/${sku}`}
-            className={`btn text-white px-3 py-1.5 whitespace-nowrap ${isLow ? "bg-indigo-400 hover:bg-indigo-300" : "bg-indigo-600 hover:bg-indigo-500"}`}
-          >
-            <IconInspect width={14} height={14} /> Fix Issue
-          </Link>
-        ) : (
-          <button disabled className="btn bg-indigo-300 text-white px-3 py-1.5 whitespace-nowrap opacity-60">
-            <IconInspect width={14} height={14} /> Fix Issue
-          </button>
-        )}
       </div>
     </div>
   );

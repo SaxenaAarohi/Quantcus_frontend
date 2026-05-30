@@ -69,38 +69,40 @@ function JobRow({ job: j }) {
         <tone.Icon width={20} height={20} className={tone.text} />
       </span>
 
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="font-semibold uppercase tracking-wide text-slate-800 text-sm">
-            {TYPE_LABEL[j.type] || j.type}
-          </span>
-          <span className="text-slate-300">|</span>
-          <span className="font-mono text-xs text-slate-400">ID: {j.id.slice(-8)}</span>
+      <div className="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-semibold uppercase tracking-wide text-slate-800 text-sm">
+              {TYPE_LABEL[j.type] || j.type}
+            </span>
+            <span className="text-slate-300">|</span>
+            <span className="font-mono text-xs text-slate-400">ID: {j.id.slice(-8)}</span>
+          </div>
+          <p className="text-sm text-slate-500 mt-1">{j.message || "—"}</p>
+          <p className="text-xs text-slate-400 mt-1.5">
+            Started: {formatDate(j.startedAt)} <span className="mx-1">•</span> Finished: {formatDate(j.completedAt)}
+          </p>
+          {j.errorDetails && (
+            <details className="text-xs mt-2">
+              <summary className="cursor-pointer text-rose-600">Error details</summary>
+              <pre className="bg-slate-50 border border-slate-100 p-2 rounded mt-1 overflow-x-auto">
+                {safeJson(j.errorDetails)}
+              </pre>
+            </details>
+          )}
         </div>
-        <p className="text-sm text-slate-500 mt-1">{j.message || "—"}</p>
-        <p className="text-xs text-slate-400 mt-1.5">
-          Started: {formatDate(j.startedAt)} <span className="mx-1">•</span> Finished: {formatDate(j.completedAt)}
-        </p>
-        {j.errorDetails && (
-          <details className="text-xs mt-2">
-            <summary className="cursor-pointer text-rose-600">Error details</summary>
-            <pre className="bg-slate-50 border border-slate-100 p-2 rounded mt-1 overflow-x-auto">
-              {safeJson(j.errorDetails)}
-            </pre>
-          </details>
-        )}
-      </div>
 
-      <div className="w-56 shrink-0">
-        <div className="flex items-center justify-between text-xs">
-          <span className="font-semibold uppercase tracking-wide text-slate-700">{j.status}</span>
-          <span className="text-slate-400">{j.progress}%</span>
-        </div>
-        <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden mt-1.5">
-          <div className={`h-full rounded-full transition-all ${tone.bar}`} style={{ width: `${j.progress}%` }} />
-        </div>
-        <div className="mt-2 flex justify-end">
-          <Badge label={j.status} type="status" />
+        <div className="w-full sm:w-56 shrink-0">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-semibold uppercase tracking-wide text-slate-700">{j.status}</span>
+            <span className="text-slate-400">{j.progress}%</span>
+          </div>
+          <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden mt-1.5">
+            <div className={`h-full rounded-full transition-all ${tone.bar}`} style={{ width: `${j.progress}%` }} />
+          </div>
+          <div className="mt-2 flex justify-end">
+            <Badge label={j.status} type="status" />
+          </div>
         </div>
       </div>
     </div>

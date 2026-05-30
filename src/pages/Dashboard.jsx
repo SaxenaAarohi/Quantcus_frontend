@@ -131,7 +131,7 @@ export default function Dashboard() {
           {faultData.length === 0 ? (
             <p className="text-slate-400 text-sm py-20 text-center">No faults detected.</p>
           ) : (
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
               <ResponsiveContainer width="55%" height={220}>
                 <PieChart>
                   <Pie data={faultData} dataKey="value" nameKey="name" innerRadius={55} outerRadius={88} paddingAngle={3}>

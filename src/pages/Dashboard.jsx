@@ -28,6 +28,17 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
 
+  const [refreshing, setRefreshing] = useState(false);
+  const [lastRefreshed, setLastRefreshed] = useState(null);
+
+  const REFRESH_MS = 60000; // 60s
+
+  async function loadData() {
+    const [s, p] = await Promise.all([api.getSummary(), api.listProducts()]);
+    setSummary(s);
+    setProducts(p);
+  }
+
   async function downloadReport() {
     setDownloading(true);
     try {
@@ -40,10 +51,23 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    Promise.all([api.getSummary(), api.listProducts()])
-      .then(([s, p]) => { setSummary(s); setProducts(p); })
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
+    loadData().catch((e) => setError(e.message)).finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(async () => {
+      setRefreshing(true);
+      try {
+        await api.refreshPrices();
+        await loadData();
+        setLastRefreshed(new Date());
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setRefreshing(false);
+      }
+    }, REFRESH_MS);
+    return () => clearInterval(id);
   }, []);
 
   const categoryData = useMemo(() => {
@@ -77,14 +101,24 @@ export default function Dashboard() {
           <IconDashboard width={22} height={22} className="text-indigo-600" />
           <h1 className="text-xl font-semibold tracking-tight text-slate-800">Product Quality Analytics</h1>
         </div>
-        <button
-          onClick={downloadReport}
-          disabled={downloading || summary.totalProducts === 0}
-          className="btn-secondary whitespace-nowrap"
-        >
-          <DownloadIcon />
-          {downloading ? "Preparing..." : "Download Report"}
-        </button>
+        <div className="flex items-center gap-3 flex-wrap">
+          <span className="flex items-center gap-1.5 text-xs text-slate-500">
+            <span className={`h-2 w-2 rounded-full ${refreshing ? "bg-amber-500 animate-pulse" : "bg-emerald-500"}`} />
+            {refreshing
+              ? "Refreshing prices..."
+              : lastRefreshed
+              ? `Updated ${lastRefreshed.toLocaleTimeString()}`
+              : "Auto-refresh every 60s"}
+          </span>
+          <button
+            onClick={downloadReport}
+            disabled={downloading || summary.totalProducts === 0}
+            className="btn-secondary whitespace-nowrap"
+          >
+            <DownloadIcon />
+            {downloading ? "Preparing..." : "Download Report"}
+          </button>
+        </div>
       </div>
 
       {summary.totalProducts === 0 && (

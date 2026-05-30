@@ -39,14 +39,14 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex bg-[#f4f5f7]">
 
-      <aside className="w-64 shrink-0 bg-gradient-to-b from-slate-900 to-slate-950 text-slate-300 flex flex-col sticky top-0 h-screen">
+      <aside className="w-64 shrink-0 bg-white border-r border-slate-200 text-slate-600 flex flex-col sticky top-0 h-screen">
 
-        <div className="px-5 py-5 flex items-center gap-3 border-b border-white/5">
-          <span className="h-9 w-9 rounded-lg bg-indigo-600/90 text-white grid place-items-center">
+        <div className="px-5 py-5 flex items-center gap-3 border-b border-slate-100">
+          <span className="h-9 w-9 rounded-lg bg-indigo-600 text-white grid place-items-center">
             <IconGlobe width={20} height={20} />
           </span>
           <div className="leading-tight">
-            <p className="text-white font-semibold text-sm">Flipkart Seller Center</p>
+            <p className="text-slate-800 font-semibold text-sm">Flipkart Seller Center</p>
             <p className="text-[10px] tracking-[0.18em] text-slate-400 font-medium">PRODUCT INTELLIGENCE</p>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default function Layout() {
           <button
             onClick={auditPrices}
             disabled={auditing}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-slate-200 hover:bg-white/10 transition-colors disabled:opacity-60"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 transition-colors disabled:opacity-60"
           >
             <IconRefresh width={14} height={14} className={auditing ? "animate-spin" : ""} />
             {auditing ? "Auditing..." : "Audit Market Prices"}
@@ -71,8 +71,8 @@ export default function Layout() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? "bg-indigo-600 text-white shadow-sm shadow-indigo-900/40"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                    ? "bg-indigo-50 text-indigo-700"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`
               }
             >
@@ -81,7 +81,7 @@ export default function Layout() {
               {badge && counts[badge] > 0 && (
                 <span
                   className={`min-w-[20px] text-center rounded-md px-1.5 py-0.5 text-[10px] font-semibold ${
-                    alert ? "bg-rose-500 text-white" : "bg-white/10 text-slate-200"
+                    alert ? "bg-rose-500 text-white" : "bg-slate-100 text-slate-600"
                   }`}
                 >
                   {counts[badge]}
@@ -91,7 +91,7 @@ export default function Layout() {
           ))}
         </nav>
 
-        <div className="px-5 py-4 border-t border-white/5 text-[11px] text-slate-500">
+        <div className="px-5 py-4 border-t border-slate-100 text-[11px] text-slate-400">
           Flipkart Seller Dashboard
         </div>
       </aside>

@@ -109,6 +109,27 @@ export default function ProductDetail() {
       </div>
       {error && <ErrorBox message={error} />}
 
+      {product.recommendations?.length > 0 && (
+        <div className="card p-5 space-y-3">
+          <h2 className="font-medium">Recommended Actions ({product.recommendations.length})</h2>
+
+          <ul className="space-y-2">
+            {product.recommendations.map((r, i) => (
+              <li key={i} className="flex items-start gap-3 border border-neutral-100 rounded-lg p-3">
+                <Badge label={r.priority} />
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-sm text-neutral-700">{r.title}</p>
+                  <p className="text-sm text-neutral-600">{r.action}</p>
+                </div>
+                {r.estimatedImpact > 0 && (
+                  <span className="badge bg-emerald-50 text-emerald-700 whitespace-nowrap">+{r.estimatedImpact} quality</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="grid md:grid-cols-2 gap-6">
 
         <form onSubmit={save} className="card p-5 space-y-4">

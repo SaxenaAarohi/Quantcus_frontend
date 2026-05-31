@@ -119,7 +119,7 @@ function statusTone(status) {
       return { Icon: IconCheckCircle, tile: "bg-amber-50", text: "text-amber-600", bar: "bg-amber-500" };
     case "RUNNING":
       return { Icon: IconJobs, tile: "bg-indigo-50", text: "text-indigo-600", bar: "bg-indigo-600" };
-    default: // PENDING
+    default:
       return { Icon: IconJobs, tile: "bg-slate-100", text: "text-slate-400", bar: "bg-slate-300" };
   }
 }

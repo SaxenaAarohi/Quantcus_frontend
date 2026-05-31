@@ -31,7 +31,7 @@ export default function Dashboard() {
   const [refreshing, setRefreshing] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState(null);
 
-  const REFRESH_MS = 60000; // 60s
+  const REFRESH_MS = 60000;
 
   async function loadData() {
     const [s, p] = await Promise.all([api.getSummary(), api.listProducts()]);

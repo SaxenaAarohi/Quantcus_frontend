@@ -31,7 +31,7 @@ export default function Dashboard() {
   const [refreshing, setRefreshing] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState(null);
 
-  const REFRESH_MS = 60000;
+  const REFRESH_MS = 60 * 60 * 1000; // 1 hour
 
   async function loadData() {
     const [s, p] = await Promise.all([api.getSummary(), api.listProducts()]);
@@ -108,7 +108,7 @@ export default function Dashboard() {
               ? "Refreshing prices..."
               : lastRefreshed
               ? `Updated ${lastRefreshed.toLocaleTimeString()}`
-              : "Auto-refresh every 60s"}
+              : "Auto-refresh hourly"}
           </span>
           <button
             onClick={downloadReport}

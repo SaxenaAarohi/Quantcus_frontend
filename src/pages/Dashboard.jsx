@@ -8,6 +8,7 @@ import { api } from "../services/api";
 import { DashboardSkeleton, ErrorBox } from "../components/Spinner";
 import { CHART_COLORS, qualityPill } from "../utils/format";
 import { IconDashboard, IconBag, IconWarning, IconInfo, IconInspect } from "../components/icons";
+import { Download } from "lucide-react";
 
 function riskBand(score) {
   if (score >= 70) return { label: "Low risk: Catalog healthy", tint: "from-emerald-50 to-white", ring: "ring-emerald-200", bar: "bg-emerald-500", text: "text-emerald-600" };
@@ -115,7 +116,7 @@ export default function Dashboard() {
             disabled={downloading || summary.totalProducts === 0}
             className="btn-secondary whitespace-nowrap"
           >
-            <DownloadIcon />
+            <Download width={15} height={15} />
             {downloading ? "Preparing..." : "Download Report"}
           </button>
         </div>
@@ -293,15 +294,6 @@ function SeverityRow({ color, label, value }) {
   );
 }
 
-function DownloadIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-      <polyline points="7 10 12 15 17 10" />
-      <line x1="12" y1="15" x2="12" y2="3" />
-    </svg>
-  );
-}
 
 function Thumb({ src, name }) {
   const [failed, setFailed] = useState(false);

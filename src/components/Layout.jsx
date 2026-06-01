@@ -4,6 +4,7 @@ import { api } from "../services/api";
 import {
   IconDashboard, IconImport, IconInventory, IconAlerts, IconJobs, IconGlobe, IconRefresh,
 } from "./icons";
+import { Menu, X } from "lucide-react";
 
 const links = [
   { to: "/", label: "Quality Dashboard", end: true, Icon: IconDashboard },
@@ -65,7 +66,7 @@ export default function Layout() {
             aria-label="Close menu"
             className="lg:hidden text-slate-400 hover:text-slate-700"
           >
-            <CloseIcon />
+            <X width={20} height={20} />
           </button>
         </div>
 
@@ -119,7 +120,7 @@ export default function Layout() {
 
         <header className="lg:hidden sticky top-0 z-20 flex items-center gap-3 bg-white border-b border-slate-200 px-4 py-3">
           <button onClick={() => setOpen(true)} aria-label="Open menu" className="text-slate-600 hover:text-slate-900">
-            <MenuIcon />
+            <Menu width={24} height={24} />
           </button>
           <span className="h-8 w-8 rounded-lg bg-indigo-600 text-white grid place-items-center">
             <IconGlobe width={18} height={18} />
@@ -132,24 +133,5 @@ export default function Layout() {
         </main>
       </div>
     </div>
-  );
-}
-
-function MenuIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-  );
-}
-
-function CloseIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
   );
 }
